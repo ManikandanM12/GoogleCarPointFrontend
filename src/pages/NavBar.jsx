@@ -85,7 +85,7 @@ function NavBar() {
               <div className="ml-4 mt-2 space-y-2">
                 <Link to="/bills" className="mobile-sub-link" onClick={() => setIsMenuOpen(false)}>Bills</Link>
                 <Link to="/checkin-list" className="mobile-sub-link" onClick={() => setIsMenuOpen(false)}>Check-in List</Link>
-                <Link to="/job-orders" className="mobile-sub-link" onClick={() => setIsMenuOpen(false)}>Job Orders</Link>
+                <Link to="/job-order" className="mobile-sub-link" onClick={() => setIsMenuOpen(false)}>Job Orders</Link>
                 <Link to="/job-orders-list" className="mobile-sub-link" onClick={() => setIsMenuOpen(false)}>Job Orders List</Link>
                 <Link to="/dashboard" className="mobile-sub-link" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
               </div>

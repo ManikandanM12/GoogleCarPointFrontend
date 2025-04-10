@@ -69,7 +69,7 @@ const JobOrderForm = () => {
   return (
     <motion.form
       onSubmit={handleSubmit}
-      className="max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-xl mt-10"
+        className="w-full px-4 md:px-6 py-6 bg-white rounded-2xl shadow-xl mt-10 max-w-4xl mx-auto"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -81,7 +81,7 @@ const JobOrderForm = () => {
         Multi Brand Car Service Center - All Electrical, A/C Fittings, Tinkering, Painting Works
       </p>
 
-      <div className="grid grid-cols-2 gap-4 text-sm text-gray-700">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
         <div>
           <label className="block mb-1 font-medium">Model:</label>
           <select
@@ -109,7 +109,7 @@ const JobOrderForm = () => {
       <hr className="my-4" />
 
       <h2 className="text-xl font-semibold mb-2">Checklist</h2>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
         {checklistOptions.map((item, idx) => (
           <label key={idx} className="flex items-center gap-2">
             <input
@@ -125,7 +125,7 @@ const JobOrderForm = () => {
       <hr className="my-4" />
 
       <h2 className="text-xl font-semibold mb-2">Tools & Fuel</h2>
-      <div className="grid grid-cols-2 text-sm gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 text-sm gap-4">
         <div>
           <label className="block mb-1 font-medium">Fuel Level:</label>
           <input
@@ -144,7 +144,7 @@ const JobOrderForm = () => {
 
       <hr className="my-4" />
 
-      <div className="grid grid-cols-2 gap-4 text-sm">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
         <div>
           <label className="block font-medium mb-1">Estimated Cost:</label>
           <input className="w-full border rounded px-2 py-1" type="text" value={formData.estimatedCost} onChange={(e) => setFormData({ ...formData, estimatedCost: e.target.value })} />
