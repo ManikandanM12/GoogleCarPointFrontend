@@ -1,39 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
-  Car, Search, Calendar, Phone, User, DollarSign, StickyNote,
-  BarChart2, Clock, CalendarDays, CalendarCheck, FileDown
-} from 'lucide-react';
-import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
-
-const groupBillsByMonth = (bills) => {
-  const grouped = {};
-  bills.forEach((bill) => {
-    const date = new Date(bill.createdAt);
-    const monthKey = date.toLocaleString('default', {
-      month: 'long',
-      year: 'numeric',
-    });
-    if (!grouped[monthKey]) grouped[monthKey] = [];
-    grouped[monthKey].push(bill);
-  });
-  return grouped;
-};
+  Car,
+  Search,
+  Calendar,
+  Phone,
+  User,
+  DollarSign,
+  StickyNote,
+  BarChart2,
+  Clock,
+  Hammer,
+  CalendarDays,
+  CalendarCheck,
+  FileDown,
+} from "lucide-react";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 const Bills = () => {
   const [bills, setBills] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredBills, setFilteredBills] = useState([]);
   const [stats, setStats] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
-      console.log('No token, redirecting...');
-      navigate('/login');
+      console.log("No token, redirecting...");
+      navigate("/login");
     } else {
       fetchBills(token);
       fetchStats(token);
@@ -42,29 +39,35 @@ const Bills = () => {
 
   const fetchBills = async (token) => {
     try {
-      const res = await axios.get('https://googlecarpointproject.onrender.com/api/billing', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://googlecarpointproject.onrender.com/api/billing",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setBills(res.data);
       setFilteredBills(res.data);
     } catch (err) {
-      console.error('Fetch bills error:', err);
+      console.error("Fetch bills error:", err);
     }
   };
 
   const fetchStats = async (token) => {
     try {
-      const res = await axios.get('https://googlecarpointproject.onrender.com/api/billing/stats', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(
+        "https://googlecarpointproject.onrender.com/api/billing/dashboard",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setStats(res.data);
     } catch (err) {
-      console.error('Fetch stats error:', err);
+      console.error("Fetch stats error:", err);
     }
   };
 
   const handleSearch = async () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (searchTerm.trim()) {
       try {
         const res = await axios.get(
@@ -73,7 +76,7 @@ const Bills = () => {
         );
         setFilteredBills(res.data);
       } catch (err) {
-        console.error('Search error:', err);
+        console.error("Search error:", err);
       }
     } else {
       setFilteredBills(bills);
@@ -82,25 +85,41 @@ const Bills = () => {
 
   const exportToExcel = () => {
     const dataToExport = filteredBills.map((bill) => ({
-      'Car Number': bill.carNumber,
-      'Customer Name': bill.customerName || 'N/A',
-      'Phone': bill.phone || 'N/A',
-      'Service Type': bill.serviceType || 'N/A',
-      'Total Amount': bill.totalAmount,
-      'Created At': new Date(bill.createdAt).toLocaleString(),
+      "Car Number": bill.carNumber,
+      "Customer Name": bill.customer || "N/A",
+      Phone: bill.phone || "N/A",
+      "Service Type": bill.serviceType || "N/A",
+      "Total Amount": bill.totalAmount,
+      "Created At": new Date(bill.createdAt).toLocaleString(),
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(dataToExport);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Bills');
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Bills");
 
     const excelBuffer = XLSX.write(workbook, {
-      bookType: 'xlsx',
-      type: 'array',
+      bookType: "xlsx",
+      type: "array",
     });
 
-    const fileData = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    saveAs(fileData, 'Google-CarPoint-Bills.xlsx');
+    const fileData = new Blob([excelBuffer], {
+      type: "application/octet-stream",
+    });
+    saveAs(fileData, "Google-CarPoint-Bills.xlsx");
+  };
+
+  const groupBillsByMonth = (bills) => {
+    const grouped = {};
+    bills.forEach((bill) => {
+      const date = new Date(bill.createdAt);
+      const monthKey = date.toLocaleString("default", {
+        month: "long",
+        year: "numeric",
+      });
+      if (!grouped[monthKey]) grouped[monthKey] = [];
+      grouped[monthKey].push(bill);
+    });
+    return grouped;
   };
 
   const grouped = groupBillsByMonth(filteredBills);
@@ -108,7 +127,6 @@ const Bills = () => {
   return (
     <div className="bg-white text-gray-900 min-h-screen">
       <div className="p-6 max-w-7xl mx-auto bg-white text-gray-900 rounded-xl border border-blue-100 transition-colors duration-300">
-
         <h1 className="text-3xl font-extrabold text-center mb-8 text-blue-700 drop-shadow">
           Monthly Bill History
         </h1>
@@ -143,32 +161,43 @@ const Bills = () => {
             <Clock className="text-blue-600" />
             <div>
               <p className="text-gray-600 text-sm">Daily Total</p>
-              <p className="text-xl font-bold text-blue-700">₹{stats.dailyTotal || 0}</p>
+              <p className="text-xl font-bold text-blue-700">
+                ₹{stats?.dailyTotal || 0}
+              </p>
             </div>
           </div>
           <div className="bg-green-100 p-4 rounded-lg flex items-center gap-3">
             <CalendarCheck className="text-green-600" />
             <div>
               <p className="text-gray-600 text-sm">Monthly Total</p>
-              <p className="text-xl font-bold text-green-700">₹{stats.monthlyTotal || 0}</p>
+              <p className="text-xl font-bold text-green-700">
+                ₹{stats?.monthlyTotal || 0}
+              </p>
             </div>
           </div>
           <div className="bg-yellow-100 p-4 rounded-lg flex items-center gap-3">
             <CalendarDays className="text-yellow-600" />
             <div>
               <p className="text-gray-600 text-sm">Yearly Total</p>
-              <p className="text-xl font-bold text-yellow-700">₹{stats.yearlyTotal || 0}</p>
+              <p className="text-xl font-bold text-yellow-700">
+                ₹{stats?.yearlyTotal || 0}
+              </p>
             </div>
           </div>
           <div className="bg-purple-100 p-4 rounded-lg flex items-center gap-3">
             <BarChart2 className="text-purple-600" />
-            <div>
-              <p className="text-gray-600 text-sm">Car Frequencies</p>
-              <ul className="text-sm mt-1">
+            <div className="bg-white rounded-lg shadow p-4 max-h-64 overflow-y-auto">
+              <p className="text-gray-700 font-semibold mb-2 border-b pb-1">
+                🚗 Car Frequencies
+              </p>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-2 text-sm text-gray-800">
                 {stats.carFrequency &&
                   Object.entries(stats.carFrequency).map(([car, count]) => (
-                    <li key={car} className="text-purple-800">
-                      {car}: <span className="font-bold">{count}</span> time(s)
+                    <li key={car} className="flex justify-between">
+                      <span className="text-indigo-700 font-medium">{car}</span>
+                      <span className="text-indigo-900 font-bold">
+                        {count}x
+                      </span>
                     </li>
                   ))}
               </ul>
@@ -194,7 +223,8 @@ const Bills = () => {
                   <div className="text-gray-800 space-y-2">
                     <div className="flex items-center gap-2">
                       <User size={18} className="text-blue-500" />
-                      <span className="font-medium">Customer:</span> {bill.customerName}
+                      <span className="font-medium">Customer:</span>{" "}
+                      {bill.customer}
                     </div>
                     <div className="flex items-center gap-2">
                       <Phone size={18} className="text-green-500" />
@@ -202,15 +232,47 @@ const Bills = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <DollarSign size={18} className="text-yellow-500" />
-                      <span className="font-medium">Amount:</span> ₹{bill.totalAmount}
+                      <span className="font-medium">Amount:</span> ₹
+                      {bill.totalAmount}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <StickyNote size={18} className="text-purple-500" />
-                      <span className="font-medium">Service:</span> {bill.serviceType}
-                    </div>
+                    {bill.billItems && bill.billItems.length > 0 && (
+                      <div className="mt-2">
+                        <div className="flex items-center gap-2 mb-1">
+                          <StickyNote size={18} className="text-purple-500" />
+                          <span className="font-medium">Services:</span>
+                        </div>
+                        <ul className="list-disc list-inside text-sm text-gray-700 pl-6">
+                          {bill.billItems.map((item, i) => (
+                            <li key={i}>
+                              <span className="font-semibold">
+                                {item.category}
+                              </span>{" "}
+                              — {item.service} × {item.quantity} = ₹
+                              {item.amount}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {bill.labourItems && bill.labourItems.length > 0 && (
+                      <div className="mt-3">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Hammer size={18} className="text-red-500" />
+                          <span className="font-medium">Labour:</span>
+                        </div>
+                        <ul className="list-disc list-inside text-sm text-gray-700 pl-6">
+                          {bill.labourItems.map((labour, i) => (
+                            <li key={i}>
+                              {labour.desc} — ₹{labour.amount}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                     <div className="flex items-center gap-2">
                       <Calendar size={18} className="text-pink-500" />
-                      <span className="font-medium">Date:</span>{' '}
+                      <span className="font-medium">Date:</span>{" "}
                       {new Date(bill.createdAt).toLocaleString()}
                     </div>
                   </div>

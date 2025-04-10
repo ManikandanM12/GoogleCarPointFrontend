@@ -121,6 +121,8 @@ const Billing = () => {
   const [labourDesc, setLabourDesc] = useState('');
   const [labourRate, setLabourRate] = useState('');
   const [labourItems, setLabourItems] = useState([]);
+  const [phone,setPhone] = useState('');
+  const [customer,setCustomer]= useState('');  
 
   const handleAddItem = () => {
     if (!selectedCategory || !selectedService || !rate || quantity <= 0) return;
@@ -173,6 +175,9 @@ const Billing = () => {
         labourItems,
         carNumber:carNumber.toUpperCase(),
         totalAmount: grandTotal,
+        customer:customer,
+        phone:phone,
+      
       });
   
       if (response.data.success) {
@@ -215,6 +220,22 @@ const Billing = () => {
   value={carNumber}
   onChange={(e) => setCarNumber(e.target.value.toUpperCase())}
   placeholder="Enter Car Number"
+  className="border border-gray-600 bg-transparent focus:outline-none p-1 text-black text-center"
+/>
+  <span>Customer Name:</span>
+  <input
+  type="text"
+  value={customer}
+  onChange={(e) => setCustomer(e.target.value)}
+  placeholder="Eneter Customer Name"
+  className="border border-gray-600 bg-transparent focus:outline-none p-1 text-black text-center"
+/>
+  <span>TO:</span>
+  <input
+  type="number"
+  value={phone}
+  onChange={(e) => setPhone(e.target.value)}
+  placeholder="Enter Phone Number"
   className="border border-gray-600 bg-transparent focus:outline-none p-1 text-black text-center"
 />
 </div>
