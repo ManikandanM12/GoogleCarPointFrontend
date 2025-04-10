@@ -38,100 +38,33 @@ function NavBar() {
     <nav className="m-1 bg-gray-900 rounded-xl shadow-lg text-white px-6 py-6 sticky top-0 z-50">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         <Link to="/" className="text-xl font-bold text-white hover:text-white">
-          <img src={navImg} alt="" className="w-20 h-10" />
+          <img src={navImg} alt="logo" className="w-20 h-10" />
         </Link>
 
-        <button
-          className="md:hidden text-2xl"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
+        <button className="md:hidden text-2xl" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           ☰
         </button>
 
+        {/* Desktop Links */}
         <div className="hidden md:flex space-x-6 items-center">
-        <Link
-                to="/"
-                className="relative inline-block text-white font-bold
-              after:block after:h-[4px] after:bg-blue-500
-              after:scale-x-0 after:origin-left after:transition-transform
-              after:duration-300 hover:after:scale-x-100"
-              >
-                Home
-              </Link>
-        <Link
-                to="/repairs"
-                className="relative inline-block text-white font-bold
-              after:block after:h-[4px] after:bg-blue-500
-              after:scale-x-0 after:origin-left after:transition-transform
-              after:duration-300 hover:after:scale-x-100"
-              >
-                Services
-              </Link>
-        <Link
-                to="/about-us"
-                className="relative inline-block text-white font-bold
-              after:block after:h-[4px] after:bg-blue-500
-              after:scale-x-0 after:origin-left after:transition-transform
-              after:duration-300 hover:after:scale-x-100"
-              >
-            About
-              </Link>
-        <Link
-                to="/reviews"
-                className="relative inline-block text-white font-bold
-              after:block after:h-[4px] after:bg-blue-500
-              after:scale-x-0 after:origin-left after:transition-transform
-              after:duration-300 hover:after:scale-x-100"
-              >
-            Reviews
-              </Link>
-       
-        
+          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/repairs" className="nav-link">Services</Link>
+          <Link to="/about-us" className="nav-link">About</Link>
+          <Link to="/reviews" className="nav-link">Reviews</Link>
+
           {isAuthenticated && (
-            <>
-              <Link
-                to="/bills"
-                className="relative inline-block text-white font-bold
-              after:block after:h-[4px] after:bg-blue-500
-              after:scale-x-0 after:origin-left after:transition-transform
-              after:duration-300 hover:after:scale-x-100"
-              >
-                Bills
-              </Link>
-              <Link
-                to="/checkin-list"
-                className="relative inline-block text-white font-bold
-              after:block after:h-[4px] after:bg-blue-500
-              after:scale-x-0 after:origin-left after:transition-transform
-              after:duration-300 hover:after:scale-x-100"
-              >
-                Check-in List
-              </Link>
-              <Link
-                to="/dashboard"
-                className="relative inline-block text-white font-bold
-              after:block after:h-[4px] after:bg-blue-500
-              after:scale-x-0 after:origin-left after:transition-transform
-              after:duration-300 hover:after:scale-x-100"
-              >
-            Dashboard
-              </Link>
-              <DropdownLink />
-            </>
+            <div className="relative group">
+                <DropdownLink/>
+             
+            </div>
           )}
 
           {isAuthenticated ? (
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 hover:bg-red-700 px-3 py-1 rounded text-sm"
-            >
+            <button onClick={handleLogout} className="bg-red-500 hover:bg-red-700 px-4  py-2 rounded-full text-sm">
               Logout
             </button>
           ) : (
-            <Link
-              to="/login"
-              className="bg-blue-600 hover:bg-blue-500 text-black px-3 py-1 rounded text-sm"
-            >
+            <Link to="/login" className="bg-blue-600 hover:bg-blue-500 text-black px-3 p-5 py-1 rounded-full text-sm">
               Login
             </Link>
           )}
@@ -140,110 +73,78 @@ function NavBar() {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden mt-4 space-y-3">
-          <Link
-            to="/"
-            className="block hover:text-blue-300"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Home
-          </Link>
-          <Link
-            to="/appointments"
-            className="block hover:text-blue-300"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Appointments
-          </Link>
-          <Link
-            to="/repairs"
-            className="block hover:text-blue-300"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Our services
-          </Link>
-          <Link
-            to="/about-us"
-            className="block hover:text-blue-300"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            About Us
-          </Link>
-          <Link
-            to="/reviews"
-            className="block hover:text-blue-300"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Review
-          </Link>
+        <div className="md:hidden mt-4 space-y-3 text-sm">
+          <Link to="/" onClick={() => setIsMenuOpen(false)} className="mobile-link">Home</Link>
+          <Link to="/repairs" onClick={() => setIsMenuOpen(false)} className="mobile-link">Services</Link>
+          <Link to="/about-us" onClick={() => setIsMenuOpen(false)} className="mobile-link">About</Link>
+          <Link to="/reviews" onClick={() => setIsMenuOpen(false)} className="mobile-link">Reviews</Link>
+
           {isAuthenticated && (
-            <>
-              <Link
-                to="/bills"
-                className="block hover:text-blue-300"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Bills
-              </Link>
-              <Link
-                to="/checkin-list"
-                className="block hover:text-blue-300"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Check-in List
-              </Link>
-              <Link
-                to="/job-orders"
-                className="block hover:text-blue-300"
-                onClick={() => setIsMenuOpen(false)}
-              >Job Orders
-              </Link>
-              <Link
-                to="/job-orders-list"
-                className="block hover:text-blue-300"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Job Orders List
-              </Link>
-              <Link
-                to="/"
-                className="block hover:text-blue-300"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Check-in List
-              </Link>
-              <Link
-                to="/dashboard"
-                className="block hover:text-blue-300"
-                onClick={() => setIsMenuOpen(false)}
-              >
-               Dashboard
-              </Link>
-              
-            </>
+            <details className="group">
+              <summary className="mobile-link cursor-pointer">More ▾</summary>
+              <div className="ml-4 mt-2 space-y-2">
+                <Link to="/bills" className="mobile-sub-link" onClick={() => setIsMenuOpen(false)}>Bills</Link>
+                <Link to="/checkin-list" className="mobile-sub-link" onClick={() => setIsMenuOpen(false)}>Check-in List</Link>
+                <Link to="/job-orders" className="mobile-sub-link" onClick={() => setIsMenuOpen(false)}>Job Orders</Link>
+                <Link to="/job-orders-list" className="mobile-sub-link" onClick={() => setIsMenuOpen(false)}>Job Orders List</Link>
+                <Link to="/dashboard" className="mobile-sub-link" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
+              </div>
+            </details>
           )}
 
           {isAuthenticated ? (
-            <button
-              onClick={() => {
-                handleLogout();
-                setIsMenuOpen(false);
-              }}
-              className="block bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm mt-2"
-            >
+            <button onClick={() => { handleLogout(); setIsMenuOpen(false); }} className="p-5 mobile-logout-btn">
               Logout
             </button>
           ) : (
-            <Link
-              to="/login"
-              className="block bg-blue-600 hover:bg-blue-500 text-black px-3 py-1 rounded text-sm mt-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <Link to="/login" className="p-5 mobile-login-btn" onClick={() => setIsMenuOpen(false)}>
               Login
             </Link>
           )}
         </div>
       )}
+
+      {/* Utility classes for styling */}
+      <style>{`
+        .nav-link {
+          display: inline-block;
+          position: relative;
+          font-weight: bold;
+        }
+        .nav-link::after {
+          content: '';
+          display: block;
+          height: 2px;
+          background: #3b82f6;
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.3s ease;
+        }
+        .nav-link:hover::after {
+          transform: scaleX(1);
+        }
+        .dropdown-link:hover {
+          background-color: #e0f2fe;
+        }
+        .mobile-link, .mobile-sub-link {
+          display: block;
+          padding: 0.5rem 1rem;
+          color: white;
+        }
+        .mobile-sub-link {
+          color: #ddd;
+        }
+        .mobile-login-btn, .mobile-logout-btn {
+          background-color: #3b82f6;
+          color: black;
+          padding: 0.5rem 1rem;
+          border-radius: 0.25rem;
+          font-size: 0.875rem;
+        }
+        .mobile-logout-btn {
+          background-color: #ef4444;
+        }
+      `}</style>
     </nav>
   );
 }

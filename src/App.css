@@ -60,4 +60,41 @@ body {
         border-color: transparent;
       }
     } 
-  
+    .nav-link {
+      display: inline-block;
+      position: relative;
+      font-weight: bold;
+    }
+    .nav-link::after {
+      content: '';
+      display: block;
+      height: 2px;
+      background: #3b82f6;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .nav-link:hover::after {
+      transform: scaleX(1);
+    }
+    .dropdown-link:hover {
+      background-color: #e0f2fe;
+    }
+    .mobile-link, .mobile-sub-link {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: white;
+    }
+    .mobile-sub-link {
+      color: #ddd;
+    }
+    .mobile-login-btn, .mobile-logout-btn {
+      background-color: #3b82f6;
+      color: black;
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+    }
+    .mobile-logout-btn {
+      background-color: #ef4444;
+    }
