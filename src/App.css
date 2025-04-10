@@ -1,0 +1,63 @@
+@import "tailwindcss";
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/* CarAnimation.css */
+body {
+    font-family: 'Poppins', ;
+  }
+.car-bg-animation {
+    position: absolute;
+    bottom: 0;
+    left: -200px;
+    width: 200px;
+    height: 100px;
+    background-image: url('./assets/react.svg'); /* Replace with your actual car image path */
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: moveCar 15s linear infinite;
+    z-index: 0;
+    opacity: 0.1;
+  }
+  
+  @keyframes moveCar {
+    0% {
+      left: -200px;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+
+  
+  .typewriter {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    animation: typing 3.5s steps(40, end), blink 0.75s step-end infinite;
+    white-space: nowrap;
+    border-right: 2px solid ;
+    max-width: 100%;
+    width: max-content;
+  }
+  
+  /* Adjust 'ch' unit based on character count of text */
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 28ch; /* Update this to match your text length */
+    }
+
+ }
+    @keyframes blink {
+      0%, 100% {
+        border-color: transparent;
+      }
+      50% {
+        border-color: transparent;
+      }
+    } 
+  
